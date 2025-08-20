@@ -267,7 +267,7 @@ useEffect(()=>{
       } else {
         setSelectedProduct(null);
         setCat(prev => prev.filter(d => d._id !== deleteTarget._id));
-        setSelectedProduct(cat[0]);
+        setSelectedProduct(cat[0] || []);
       }
     } else if (deleteType === 'dish') {
       const res = await fetch("/api/dishes", {
