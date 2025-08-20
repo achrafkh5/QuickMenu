@@ -1,6 +1,13 @@
 // app/reset/page.js
 "use client";
 
+import { Suspense } from "react";
 import Reset from "./Reset";
 
-export default Reset;
+export default function Page() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <Reset />
+    </Suspense>
+  );
+}
