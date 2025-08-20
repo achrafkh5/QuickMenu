@@ -154,8 +154,9 @@ useEffect(()=>{
       throw new Error(data.error || "Category creation failed");
     }
 
-    // Update state
-    setCat((prev) => [...prev, data.category]);
+    if (data.category) {
+        setCat((prev) => [...prev, data.category]);
+    }
     console.log("✅ category created successfully");
     setFile("");
     setCatin("");
@@ -218,7 +219,7 @@ useEffect(()=>{
         }
 
         console.log("Dish created successfully");
-        setDish(prev => [...prev, data.dish]);
+        if(data.dish) setDish(prev => [...prev, data.dish]);
         setReload(prev => !prev);
         setDishin("");
         setDishPhoto("");
