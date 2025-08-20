@@ -1,7 +1,6 @@
-import dynamic from "next/dynamic";
+"use client";
 
-// Import the client Reset component dynamically with SSR disabled
-const Reset = dynamic(() => import("./Reset"), { ssr: false });
+import Reset from "./Reset";
 
 export default function Page() {
   return <Reset />;
