@@ -109,7 +109,9 @@ useEffect(()=>{
     const handle = () =>setPop(true);
     const cancel = () =>{setPop(false); setCatin(""); setFile("")};
     const cancelDish = () =>{setPopDish(false); setDishin(""); setDishPhoto(""); setDishPrice("")}
-    const addDish = () =>setPopDish(true)
+    const addDish = () =>setPopDish(true);
+
+
     const submit = async () => {
   setLoadingModal(true);
   try {
@@ -154,8 +156,11 @@ useEffect(()=>{
       throw new Error(data.error || "Category creation failed");
     }
 
-    if (data.category) {
+    if (cat.length > 0) {
         setCat((prev) => [...prev, data.category]);
+    } else{
+        setCat([data.category]);
+        setSelectedProduct(data.category);  
     }
     console.log("✅ category created successfully");
     setFile("");
@@ -219,7 +224,11 @@ useEffect(()=>{
         }
 
         console.log("Dish created successfully");
-        if(data.dish) setDish(prev => [...prev, data.dish]);
+        if(dish.length > 0) {
+             setDish(prev => [...prev, data.dish]);
+            } else {
+            setDish([data.dish]);
+            }
         setReload(prev => !prev);
         setDishin("");
         setDishPhoto("");
