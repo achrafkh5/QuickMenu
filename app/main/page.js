@@ -443,7 +443,7 @@ useEffect(()=>{
                 <button className={styles.add} onClick={addDish}>Add new Dish</button>
                 <div className={styles.west}>
                     <QRCodeDownload className={styles.qr} restaurantUrl={`https://quick-menu.vercel.app/code/${slug.slug}`} />
-                    <Link href={`/code/${slug.slug}`}><button className={styles.show}>see menu <i className="fas fa-book-open"></i></button></Link>
+                    <Link href={`/code/${slug.slug}`} prefetch={true}><button className={styles.show}>see menu <i className="fas fa-book-open"></i></button></Link>
                 </div>
                 {popDish && (
   <div className={styles["modal-overlay"]}>
