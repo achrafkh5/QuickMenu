@@ -8,7 +8,7 @@ import { FaSpinner } from "react-icons/fa";
 import Cat from "./cat";
 import Dish from "./dish";
 import Image from "next/image";
-//import QRCodeDownload from "../../config/QRCodeDownload";
+import QRCodeDownload from "@/lib/QRCodeDownload";
 
 function Main() {
     const[cat,setCat]=useState([]);
@@ -442,6 +442,7 @@ useEffect(()=>{
                 
                 <button className={styles.add} onClick={addDish}>Add new Dish</button>
                 <div className={styles.west}>
+                    <QRCodeDownload className={styles.qr} restaurantUrl={`https://quick-menu.vercel.app/code/${slug.slug}`} />
                     <Link href={`/code/${slug.slug}`}><button className={styles.show}>see menu <i className="fas fa-book-open"></i></button></Link>
                 </div>
                 {popDish && (
