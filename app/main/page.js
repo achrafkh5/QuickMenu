@@ -134,7 +134,6 @@ useEffect(()=>{
       throw new Error(uploadData.error || "Image upload failed");
     }
 
-    setAvatar(uploadData.avatar);
 
     // Second: create category (JSON body)
     const res = await fetch("/api/categories", {
@@ -146,7 +145,7 @@ useEffect(()=>{
       body: JSON.stringify({
         name: catin,
         userId,
-        avatar,
+        avatar:uploadData.avatar,
       }),
     });
 
@@ -160,7 +159,6 @@ useEffect(()=>{
     console.log("✅ category created successfully");
     setFile("");
     setCatin("");
-    setAvatar(null);
     setPop(false);
   } catch (error) {
     console.error(error);
@@ -199,7 +197,6 @@ useEffect(()=>{
       throw new Error(uploadData.error || "Image upload failed");
     }
 
-    setAvatar(uploadData.avatar);
 
         const response = await fetch("/api/dishes", {
             method: "POST",
@@ -226,7 +223,6 @@ useEffect(()=>{
         setDishin("");
         setDishPhoto("");
         setDishPrice("");
-        setAvatar([]);
         setPopDish(false);
     } catch (error) {
         console.error("Error creating dish:", error);
