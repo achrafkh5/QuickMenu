@@ -2,8 +2,6 @@
 User-agent: *
 Allow: /
 
-# Host
-Host: https://quick-menu.vercel.app
 
 # Sitemaps
 Sitemap: https://quick-menu.vercel.app/sitemap.xml
