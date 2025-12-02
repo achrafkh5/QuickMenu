@@ -395,10 +395,10 @@ useEffect(()=>{
                 onClick={() => setSidebarOpen(!sidebarOpen)}
                 aria-label="Toggle sidebar"
             >
-                <i className={`fas fa-${sidebarOpen ? 'times' : 'bars'}`}></i>
+                <i className={`${sidebarOpen ? 'fas fa-times' : 'fas fa-bars'}`}></i>
             </button>
             
-            <div className={styles.logout} onClick={() => setSignout(true)}>
+            <div className={`${styles.logout} ${sidebarOpen ? styles.sidebarOpen : ''}`} onClick={() => setSignout(true)}>
                 <i className="fas fa-sign-out-alt" style={{color:"white"}}></i>
             </div>
             
