@@ -1,46 +1,83 @@
 import styles from "./main.module.css";
 import { useEffect,useState } from "react";
 import { FaTrash } from "react-icons/fa";
-function Cat({cats, isSelected, onClick, onDeleteCat,reload }){
-    const display = () =>document.getElementById(cats._id+1).style.visibility = "visible";
-    const hide = () =>document.getElementById(cats._id+1).style.visibility = "hidden";
+
+function Cat({cats, isSelected, onClick, onDeleteCat, reload, isOperating }){
+    const [showDelete, setShowDelete] = useState(false);
     const [dish,setDish] = useState([]);
+    
     useEffect(()=>{
         const fetchDish = async() => {
-            if (!cats || !cats._id) {
+            if (!cats?._id) {
+                setDish([]);
                 return;
             }
+            
             try{
                 const res = await fetch(`/api/dishes?id=${cats._id}`, {
                     method: "GET",
-                    credentials: "include", // Send cookies with request
+                    credentials: "include",
                 });  
+                
+                if (!res.ok) {
+                    throw new Error("Failed to fetch dishes");
+                }
+                
                 const data = await res.json();
     
-                if (res.ok) {
+                if (Array.isArray(data)) {
                     setDish(data);
                 } else {
-                    console.error("Error:", data.error);
+                    setDish([]);
                 }
             } catch (err) {
-                console.error("Error connecting to server:", err);
+                console.error("Error fetching dishes:", err);
+                setDish([]);
             }
         };
         fetchDish();
     },[cats,reload])
+    
     return(
-        <div className={styles.radio} onClick={onClick} onMouseOver={display} onMouseLeave={hide}>
-            <input type="radio" name="cats" id={cats._id} style={{display:"none"}} defaultChecked={isSelected}/>
-            <label htmlFor={cats._id} className={styles.ster}>
-            <div className={styles["ster-left"]}>
-                <img src= {cats.avatar.url} alt={cats.name} />
-                <p>{cats.name}</p>
-              </div>
-              <div className={styles["ster-right"]}>
-                <p>({Array.isArray(dish) ? dish.length : 0})</p>
-                <FaTrash className="trash-icon" id={cats._id+1} style={{visibility:"hidden",marginLeft:"10px",color:"white"}} onClick={e => { e.stopPropagation(); onDeleteCat(); }} />
-              </div>
-            </label>
+        <div 
+            className={styles.radio} 
+            onClick={isOperating ? undefined : onClick} 
+            onMouseEnter={() => !isOperating && setShowDelete(true)} 
+            onMouseLeave={() => setShowDelete(false)} 
+            style={isOperating ? { opacity: 0.6, cursor: 'not-allowed' } : { cursor: 'pointer' }}
+        >
+            <div className={styles.ster}>
+                <div className={styles["ster-left"]}>
+                    {cats?.avatar?.url && (
+                        // eslint-disable-next-line @next/next/no-img-element
+                        <img 
+                            src={cats.avatar.url} 
+                            alt={cats.name || 'Category'} 
+                            width={50} 
+                            height={50} 
+                            style={{ borderRadius: '8px', objectFit: 'cover' }}
+                        />
+                    )}
+                    <p>{cats.name}</p>
+                </div>
+                <div className={styles["ster-right"]}>
+                    <p>({Array.isArray(dish) ? dish.length : 0})</p>
+                    {showDelete && !isOperating && (
+                        <FaTrash 
+                            className="trash-icon" 
+                            style={{
+                                marginLeft: "10px",
+                                color: "white",
+                                cursor: "pointer"
+                            }} 
+                            onClick={e => { 
+                                e.stopPropagation(); 
+                                onDeleteCat(); 
+                            }} 
+                        />
+                    )}
+                </div>
+            </div>
         </div>
     )
 }

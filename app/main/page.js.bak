@@ -1,0 +1,243 @@
+"use client";
+
+import styles from "./main.module.css"
+import { useState, useEffect, useCallback, useRef } from "react";
+import { useRouter } from "next/navigation";
+import Link from "next/link";
+import { FaSpinner } from "react-icons/fa";
+import Cat from "./cat";
+import Dish from "./dish";
+import QRCodeDownload from "@/lib/QRCodeDownload";
+
+function Main() {
+    // User and auth state
+    const [userId, setUserId] = useState("");
+    const [slug, setSlug] = useState("");
+    const [user, setUser] = useState(null);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
+    const [retryCount, setRetryCount] = useState(0);
+
+    // Categories and dishes state
+    const [cat, setCat] = useState([]);
+    const [dish, setDish] = useState([]);
+    const [selectedProduct, setSelectedProduct] = useState(null);
+    const [reload, setReload] = useState(false);
+
+    // Modal states
+    const [pop, setPop] = useState(false);
+    const [popDish, setPopDish] = useState(false);
+    const [confirmDelete, setConfirmDelete] = useState(false);
+    const [popPrice, setPopPrice] = useState(false);
+    const [signout, setSignout] = useState(false);
+
+    // Form states
+    const [catin, setCatin] = useState("");
+    const [file, setFile] = useState(null);
+    const [dishin, setDishin] = useState("");
+    const [dishPhoto, setDishPhoto] = useState(null);
+    const [dishPrice, setDishPrice] = useState("");
+    const [newPrice, setNewPrice] = useState("");
+
+    // Operation states
+    const [deleteTarget, setDeleteTarget] = useState(null);
+    const [deleteType, setDeleteType] = useState(null);
+    const [loadingModal, setLoadingModal] = useState(false);
+    const [isOperating, setIsOperating] = useState(false);
+
+    const router = useRouter();
+    
+    // Prevent state updates after component unmount or during fast transitions
+    const isActive = useRef(true);
+    useEffect(() => {
+        isActive.current = true;
+        return () => { isActive.current = false; };
+    }, []);
+   // 1) Fetch user once
+useEffect(() => {
+    const fetchUser = async () => {
+        try {
+            const res = await fetch("/api/auth/get", {
+                method: "GET",
+                credentials: "include",
+            });
+
+            if (!res.ok) {
+                if (res.status === 401) {
+                    router.push("/login");
+                    return;
+                }
+                setLoading(false);
+                return;
+            }
+
+            const data = await res.json();
+            if (!data?.user?._id) {
+                if (!isActive.current) return;
+                setLoading(false);
+                return;
+            }
+
+            // Prevent state updates if component unmounted during async work
+            if (!isActive.current) return;
+
+            // Single state update → avoids re-render storm
+            setUser(data.user);
+            setUserId(data.user._id);
+            setSlug(data.user.slug);
+            setLoading(false);
+
+        } catch (err) {
+            console.error("Fetch user error:", err);
+            setLoading(false);
+        }
+    };
+
+    fetchUser();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+}, []); // Runs only once
+
+
+
+
+// 2) Fetch categories when we have userId
+useEffect(() => {
+    if (!userId) return;
+
+    const fetchCategories = async () => {
+        try {
+            const res = await fetch(`/api/categories?id=${userId}`, {
+                method: "GET",
+                credentials: "include"
+            });
+
+            if (!res.ok) return;
+
+            const data = await res.json();
+
+            if (Array.isArray(data)) {
+                if (!isActive.current) return;
+
+                setCat(data);
+
+                // Only auto-select product if none already selected
+                setSelectedProduct(prev => prev ? prev : data[0] || null);
+            }
+        } catch (err) {
+            console.error("Fetch categories error:", err);
+        }
+    };
+
+    fetchCategories();
+}, [userId]); // only runs once when userId loads
+
+
+
+
+// 3) Fetch dishes when selectedProduct changes
+useEffect(() => {
+    if (!selectedProduct?._id) {
+        setDish([]);
+        return;
+    }
+
+    const fetchDishes = async () => {
+        try {
+            const res = await fetch(`/api/dishes?id=${selectedProduct._id}`, {
+                method: "GET",
+                credentials: "include",
+            });
+
+            if (!res.ok) return;
+
+            const data = await res.json();
+            if (!isActive.current) return;
+            setDish(Array.isArray(data) ? data : []);
+        } catch (err) {
+            console.error("Fetch dishes error:", err);
+        }
+    };
+
+    fetchDishes();
+}, [selectedProduct]);
+
+
+    // Modal handlers
+    const handleOpenCategoryModal = useCallback(() => setPop(true), []);
+    const handleCloseCategoryModal = useCallback(() => {
+        setPop(false);
+        setCatin("");
+        setFile(null);
+    }, []);
+
+    const handleOpenDishModal = useCallback(() => setPopDish(true), []);
+    const handleCloseDishModal = useCallback(() => {
+        setPopDish(false);
+        setDishin("");
+        setDishPhoto(null);
+        setDishPrice("");
+    }, []);
+
+    // Submit category
+    const submitCategory = async () => {
+        setLoadingModal(true);
+        setIsOperating(true);
+
+        try {
+            // Validation
+            if (!catin?.trim()) {
+                alert("Please enter a category name");
+                return;
+            }
+
+            if (!file) {
+                alert("Please select an image");
+                return;
+            }
+
+            const validImageTypes = ['image/jpeg', 'image/png', 'image/gif', 'image/webp'];
+            if (!validImageTypes.includes(file.type)) {
+                alert("Please select a valid image file (JPEG, PNG, GIF, or WebP)");
+                return;
+            }
+
+            if (file.size > 5 * 1024 * 1024) {
+                alert("Image size must be less than 5MB");
+                return;
+            }
+
+            // Upload image
+            const uploadForm = new FormData();
+            uploadForm.append("file", file);
+
+            const uploadRes = await fetch("/api/upload", {
+                method: "POST",
+                body: uploadForm,
+            });
+
+            if (!uploadRes.ok) {
+                const uploadData = await uploadRes.json();
+                throw new Error(uploadData.error || "Image upload failed");
+            }
+
+            const uploadData = await uploadRes.json();
+
+            if (!uploadData?.avatar) {
+                throw new Error("Invalid upload response");
+            }
+
+            // Create category
+            const res = await fetch("/api/categories", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                credentials: "include",
+                body: JSON.stringify({
+                    name: catin.trim(),
+                    userId,
+                    avatar: uploadData.avatar,
+                }),
+            });
+
+            if (!res.ok) {

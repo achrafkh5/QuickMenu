@@ -508,50 +508,164 @@
     width: 100%;
     border-right: none;
     border-bottom: 2px solid #31364a;
-    padding: 16px 6px;
+    padding: 20px 12px;
     box-shadow: none;
+    gap: 16px;
   }
   .right {
-    padding: 16px 4px;
+    padding: 20px 12px;
+  }
+  .logout {
+    top: 15px;
+    left: 15px;
+    font-size: 1.8rem;
+  }
+  .left h4, .right h4 {
+    font-size: 1.2rem;
+    margin-bottom: 12px;
+  }
+  .addcat {
+    width: 100%;
+    padding: 12px;
+    font-size: 1.2rem;
+    justify-content: center;
+  }
+  .cat {
+    max-height: 300px;
+  }
+  .left_center {
+    padding: 16px;
+  }
+  .left_center h4 {
+    font-size: 1.2rem;
+  }
+  .left_center img {
+    width: 50px;
+    height: 50px;
+  }
+  .add, .show, .qr button {
+    padding: 12px 20px;
+    font-size: 1.1rem;
+  }
+  .west {
+    flex-direction: column;
+    gap: 12px;
+    align-items: stretch;
+  }
+  .west button {
+    width: 100%;
   }
 }
 
 @media (max-width: 600px) {
+  .body {
+    font-size: 14px;
+  }
+  .logout {
+    top: 10px;
+    left: 10px;
+    font-size: 1.5rem;
+  }
   .left {
-    padding: 10px 2px;
-    gap: 10px;
+    padding: 16px 8px;
+    gap: 12px;
   }
   .right {
-    padding: 8px 2px;
-    gap: 10px;
+    padding: 16px 8px;
+    gap: 12px;
+  }
+  .left h4, .right h4 {
+    font-size: 1rem;
+    margin-bottom: 8px;
+  }
+  .logo {
+    flex-direction: column;
+    text-align: center;
+    gap: 8px;
+  }
+  .logo img {
+    width: 60px !important;
+    height: 60px !important;
+  }
+  .logo h3 {
+    font-size: 1rem;
+  }
+  .addcat {
+    padding: 10px;
+    font-size: 1rem;
   }
   .left_center {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 8px;
-    padding: 8px 6px;
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+    padding: 12px;
+  }
+  .left_center h4 {
+    font-size: 1rem;
+  }
+  .left_center img {
+    width: 40px;
+    height: 40px;
   }
   .dishes {
-    gap: 8px;
+    gap: 10px;
+    justify-content: center;
   }
   .dish_ster {
-    min-width: 90px;
-    max-width: 100px;
-    padding: 8px 4px;
-    gap: 4px;
+    min-width: 100px;
+    max-width: 120px;
+    padding: 10px 6px;
+    gap: 6px;
   }
   .dish_ster img {
-    width: 32px;
-    height: 32px;
+    width: 40px;
+    height: 40px;
   }
-  .ster img {
-    width: 24px;
-    height: 24px;
+  .dish_ster p {
+    font-size: 0.85rem;
   }
   .ster {
     width: 100%;
     min-width: 0;
     max-width: 100%;
+    padding: 10px;
+  }
+  .ster img {
+    width: 28px;
+    height: 28px;
+  }
+  .ster p {
+    font-size: 0.9rem;
+  }
+  .add, .show, .qr button {
+    padding: 10px 16px;
+    font-size: 1rem;
+  }
+  .modal-center {
+    min-width: 90%;
+    max-width: 90%;
+    padding: 1rem 1rem !important;
+  }
+  .modal-form {
+    min-width: 100%;
+    max-width: 100%;
+    padding: 12px 8px;
+  }
+  .modal-title {
+    font-size: 1.1rem;
+    margin-bottom: 12px;
+  }
+  .modal-center p {
+    font-size: 1.1rem;
+    margin-bottom: 12px;
+  }
+  .modal-actions button {
+    padding: 8px 12px;
+    font-size: 0.95rem;
+  }
+  .fileLabel {
+    font-size: 0.9rem;
+    padding: 0.4rem 1rem;
   }
 }
 .trash-icon {
