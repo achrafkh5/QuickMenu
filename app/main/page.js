@@ -34,6 +34,7 @@ function Main() {
     const [reload, setReload] = useState(false);
     const [loadingCat, setLoadingCat] = useState(true);
     const [loadingDish, setLoadingDish] = useState(true);
+    const [sidebarOpen, setSidebarOpen] = useState(false);
 
     const router = useRouter();
 
@@ -389,10 +390,21 @@ useEffect(()=>{
     };
     return(
         <div className={styles.body} >
+            <button 
+                className={styles.hamburger} 
+                onClick={() => setSidebarOpen(!sidebarOpen)}
+                aria-label="Toggle sidebar"
+            >
+                <i className={`fas fa-${sidebarOpen ? 'times' : 'bars'}`}></i>
+            </button>
+            
             <div className={styles.logout} onClick={() => setSignout(true)}>
                 <i className="fas fa-sign-out-alt" style={{color:"white"}}></i>
             </div>
-            <div className={styles.left}>
+            
+            {sidebarOpen && <div className={styles.sidebarOverlay} onClick={() => setSidebarOpen(false)}></div>}
+            
+            <div className={`${styles.left} ${sidebarOpen ? styles.sidebarOpen : ''}`}>
                 <h4>Sidebar: Categories</h4>
                 {slug && (
                     <div className={styles.logo}>
@@ -419,7 +431,7 @@ useEffect(()=>{
                           cats={cats}
                           reload={reload}
                           setReload={setReload}
-                          onClick={() => setSelectedProduct(cats)}
+                          onClick={() => { setSelectedProduct(cats); setSidebarOpen(false); }}
                           isSelected={selectedProduct?._id === cats._id}
                           onDeleteCat={() => handleDeleteCat(cats)}
                         />

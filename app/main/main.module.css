@@ -17,6 +17,48 @@
   position: relative;
 }
 
+.hamburger {
+  position: fixed;
+  top: 15px;
+  right: 15px;
+  z-index: 1002;
+  background: #652838;
+  border: none;
+  color: white;
+  width: 45px;
+  height: 45px;
+  border-radius: 8px;
+  cursor: pointer;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.3rem;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+  transition: all 0.3s ease;
+}
+
+@media (max-width: 900px) {
+  .hamburger {
+    display: flex;
+  }
+}
+
+.hamburger:hover {
+  background: #7a3344;
+  transform: scale(1.05);
+}
+
+.sidebarOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 999;
+  backdrop-filter: blur(2px);
+}
+
 .logout{
   position: absolute;
   top: 10px;
@@ -25,9 +67,21 @@
   font-size: 1.5rem;
   cursor: pointer;
 }
+
+@media (max-width: 900px) {
+  .logout {
+    position: fixed;
+    top: 15px;
+    right: 20px;
+    left: auto;
+    z-index: 1001;
+  }
+}
+
 .logout:hover {
   opacity: 0.7;
 }
+
 .left {
   width: 300px;
   background: #652838;
@@ -38,6 +92,24 @@
   flex-direction: column;
   gap: 20px;
   box-shadow: 2px 0 8px rgba(0, 48, 73, 0.08);
+}
+
+@media (max-width: 900px) {
+  .left {
+    position: fixed;
+    left: -350px;
+    top: 0;
+    width: 300px;
+    height: 100vh;
+    padding: 80px 18px 28px;
+    transition: left 0.3s ease;
+    z-index: 1000;
+    overflow-y: auto;
+  }
+  
+  .left.sidebarOpen {
+    left: 0;
+  }
 }
 
 .left h4 {
@@ -190,6 +262,12 @@
   flex-direction: column;
   gap: 20px;
   color: #f4f6fa;
+}
+
+@media (max-width: 900px) {
+  .right {
+    width: 100%;
+  }
 }
 
 .right h4 {
