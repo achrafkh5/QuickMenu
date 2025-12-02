@@ -5,6 +5,18 @@ import { FaTrash } from "react-icons/fa";
 function Cat({cats, isSelected, onClick, onDeleteCat, reload, isOperating }){
     const [showDelete, setShowDelete] = useState(false);
     const [dish,setDish] = useState([]);
+    const [isMobile, setIsMobile] = useState(false);
+    
+    useEffect(() => {
+        const checkMobile = () => {
+            setIsMobile(window.innerWidth <= 900);
+        };
+        
+        checkMobile();
+        window.addEventListener('resize', checkMobile);
+        
+        return () => window.removeEventListener('resize', checkMobile);
+    }, []);
     
     useEffect(()=>{
         const fetchDish = async() => {
@@ -62,7 +74,7 @@ function Cat({cats, isSelected, onClick, onDeleteCat, reload, isOperating }){
                 </div>
                 <div className={styles["ster-right"]}>
                     <p>({Array.isArray(dish) ? dish.length : 0})</p>
-                    {showDelete && !isOperating && (
+                    {(showDelete || isMobile) && !isOperating && (
                         <FaTrash 
                             className="trash-icon" 
                             style={{
