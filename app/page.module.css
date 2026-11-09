@@ -1,251 +1,736 @@
+/* =========================================================
+   QuickMenu Modern Landing Page Styles
+   Theme: Wine / Plum / Burgundy (#501C29, #652838, #7C4855)
+   ========================================================= */
 
-.navbar {
-  width: 90vw;
-  max-width: 100vw;
-  border-radius: 0 0 1.25rem 1.25rem;
+.pageWrapper {
+  min-height: 100vh;
+  background-color: #faf7f5;
+  color: #22181b;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
   position: relative;
+  overflow-x: hidden;
   display: flex;
+  flex-direction: column;
+}
+
+/* Ambient glow background accents */
+.ambientGlowTop {
+  position: absolute;
+  top: -150px;
+  right: -100px;
+  width: 550px;
+  height: 550px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(101, 40, 56, 0.08) 0%, rgba(250, 247, 245, 0) 70%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.ambientGlowBottom {
+  position: absolute;
+  top: 40%;
+  left: -200px;
+  width: 600px;
+  height: 600px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(124, 72, 85, 0.06) 0%, rgba(250, 247, 245, 0) 70%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ---------------------------------------------------------
+   Modern Sticky Header
+   --------------------------------------------------------- */
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  background: rgba(250, 247, 245, 0.88);
+  border-bottom: 1px solid rgba(80, 28, 41, 0.08);
+  width: 100%;
+}
+
+.headerInner {
+  max-width: 1160px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
   justify-content: space-between;
-  align-items: center;
-  padding: 1.7rem 1.2rem 1.7rem 1.2rem;
-  background: linear-gradient(90deg, #501C29 0%, #7C4855 100%);
-  color: #652838;
-  box-shadow: 0 8px 32px rgba(121, 85, 72, 0.10);
-  z-index: 1;
-  gap: 1rem;
-  margin-bottom: 2rem;
+  padding: 0.95rem 1.5rem;
 }
-.navLogo {
+
+.brand {
   display: flex;
   align-items: center;
-  gap: 0.7rem;
-  font-size: 1.45rem;
-  font-weight: 800;
-  color: white;
-  letter-spacing: 1px;
+  gap: 0.65rem;
+  text-decoration: none;
 }
-.logoIcon {
-  font-size: 2rem;
-  margin-right: 0.2rem;
-  color: #652838;
+
+.brandIcon {
+  width: 36px;
+  height: 36px;
+  border-radius: 9px;
+  background: linear-gradient(135deg, #501C29 0%, #652838 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #ffffff;
+  font-size: 1.05rem;
+  box-shadow: 0 4px 10px rgba(80, 28, 41, 0.2);
 }
-.logoText {
+
+.brandText {
   font-size: 1.35rem;
-  font-weight: 700;
-  color: white;
-  letter-spacing: 1.5px;
+  font-weight: 800;
+  color: #501C29;
+  letter-spacing: -0.5px;
 }
-.navLinks {
+
+.navActions {
   display: flex;
   align-items: center;
-  gap: 1.2rem;
+  gap: 0.85rem;
 }
-.navLink {
-  color: #fff;
-  background: linear-gradient(90deg, #652838 0%, #6b1027 100%);
-  border: none;
-  box-shadow: 0 2px 8px rgba(121, 85, 72, 0.10);
-  padding: 0.6rem 1.5rem;
-  border-radius: 0.7rem;
+
+.loginLink {
+  text-decoration: none;
+  color: #501C29;
+  font-weight: 600;
+  font-size: 0.95rem;
+  padding: 0.55rem 1rem;
+  border-radius: 8px;
+  transition: all 0.2s ease;
+}
+
+.loginLink:hover {
+  background: rgba(80, 28, 41, 0.06);
+  color: #652838;
+}
+
+.signupButton {
+  text-decoration: none;
+  color: #ffffff;
+  background: #501C29;
+  font-weight: 600;
+  font-size: 0.95rem;
+  padding: 0.55rem 1.25rem;
+  border-radius: 9999px;
+  transition: all 0.2s ease;
+  box-shadow: 0 3px 12px rgba(80, 28, 41, 0.2);
+}
+
+.signupButton:hover {
+  background: #652838;
+  transform: translateY(-1px);
+  box-shadow: 0 5px 16px rgba(80, 28, 41, 0.28);
+}
+
+/* ---------------------------------------------------------
+   Main Page Container
+   --------------------------------------------------------- */
+.mainContent {
+  max-width: 1160px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 0 1.5rem 4rem;
+  position: relative;
+  z-index: 1;
+  box-sizing: border-box;
+}
+
+/* ---------------------------------------------------------
+   Hero Section
+   --------------------------------------------------------- */
+.heroSection {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 4.5rem 1rem 3.5rem;
+  max-width: 840px;
+  margin: 0 auto;
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  background: rgba(80, 28, 41, 0.05);
+  border: 1px solid rgba(80, 28, 41, 0.12);
+  color: #501C29;
+  font-size: 0.85rem;
+  font-weight: 600;
+  padding: 0.35rem 0.95rem;
+  border-radius: 9999px;
+  margin-bottom: 1.5rem;
+  letter-spacing: 0.3px;
+}
+
+.badgeDot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #652838;
+}
+
+.heroTitle {
+  font-size: 3.25rem;
+  font-weight: 800;
+  line-height: 1.15;
+  color: #350c18;
+  margin: 0 0 1.35rem;
+  letter-spacing: -1.2px;
+}
+
+.heroSubtitle {
+  font-size: 1.2rem;
+  line-height: 1.6;
+  color: #634f55;
+  max-width: 660px;
+  margin: 0 0 2.2rem;
+  font-weight: 400;
+}
+
+.ctaGroup {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  margin-bottom: 1.8rem;
+}
+
+.primaryCta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.65rem;
+  background: linear-gradient(135deg, #501C29 0%, #652838 100%);
+  color: #ffffff;
+  padding: 0.95rem 2.25rem;
+  border-radius: 9999px;
   font-size: 1.05rem;
   font-weight: 600;
   text-decoration: none;
-  transition: background 0.2s, transform 0.2s;
-  letter-spacing: 0.5px;
+  box-shadow: 0 6px 20px rgba(80, 28, 41, 0.25);
+  transition: all 0.25s ease;
 }
-.navLink:hover {
-  background: linear-gradient(90deg, #501C29 0%, #652838 100%);
-  color: #fff;
-  box-shadow: 0 4px 16px rgba(121, 85, 72, 0.18);
-  transform: translateY(-2px) scale(1.03);
+
+.primaryCta:hover {
+  background: linear-gradient(135deg, #3c121e 0%, #501C29 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(80, 28, 41, 0.32);
 }
-/* Glassmorphism background and layout */
-.body {
-  min-height: 100vh;
+
+.trustRow {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  color: #7b666e;
+  font-size: 0.88rem;
+  font-weight: 500;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.trustRow i {
+  color: #652838;
+  font-size: 0.8rem;
+  margin-right: 0.25rem;
+}
+
+.trustDot {
+  opacity: 0.35;
+}
+
+/* ---------------------------------------------------------
+   Product Showcase Preview
+   --------------------------------------------------------- */
+.showcaseSection {
+  margin: 1.5rem auto 5rem;
+  max-width: 1040px;
+}
+
+.showcaseGrid {
+  display: grid;
+  grid-template-columns: 1.2fr 0.9fr;
+  gap: 2rem;
+  align-items: stretch;
+}
+
+/* Menu Mockup Card */
+.menuDevice {
+  background: #ffffff;
+  border-radius: 1.25rem;
+  padding: 1.75rem;
+  box-shadow: 0 12px 36px rgba(80, 28, 41, 0.08);
+  border: 1px solid rgba(80, 28, 41, 0.09);
+  display: flex;
+  flex-direction: column;
+}
+
+.deviceHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 1.25rem;
+  border-bottom: 1px solid #f0eae7;
+  margin-bottom: 1.25rem;
+}
+
+.restaurantMeta {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+}
+
+.restaurantAvatar {
+  width: 44px;
+  height: 44px;
+  border-radius: 10px;
+  background: rgba(80, 28, 41, 0.08);
+  color: #501C29;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+}
+
+.restaurantName {
+  margin: 0;
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #350c18;
+}
+
+.restaurantStatus {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.82rem;
+  color: #7b666e;
+  font-weight: 500;
+  margin-top: 2px;
+}
+
+.liveIndicator {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #2e7d32;
+  box-shadow: 0 0 0 3px rgba(46, 125, 50, 0.15);
+}
+
+.categoryPills {
+  display: flex;
+  gap: 0.5rem;
+  overflow-x: auto;
+  padding-bottom: 0.85rem;
+  margin-bottom: 1rem;
+}
+
+.pill {
+  padding: 0.35rem 0.95rem;
+  border-radius: 9999px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  background: #f7f3f1;
+  color: #715b63;
+  white-space: nowrap;
+}
+
+.pillActive {
+  background: #501C29;
+  color: #ffffff;
+}
+
+.sampleDishes {
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
+}
+
+.dishCard {
+  background: #fbf9f8;
+  border: 1px solid #ede5e2;
+  border-radius: 0.85rem;
+  padding: 0.95rem 1.15rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  transition: transform 0.2s ease, border-color 0.2s ease;
+}
+
+.dishCard:hover {
+  transform: translateY(-1px);
+  border-color: rgba(80, 28, 41, 0.2);
+}
+
+.dishInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.dishTitle {
+  font-size: 0.98rem;
+  font-weight: 700;
+  color: #350c18;
+}
+
+.dishDesc {
+  font-size: 0.82rem;
+  color: #786269;
+  line-height: 1.4;
+}
+
+.dishPrice {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #501C29;
+  white-space: nowrap;
+}
+
+/* QR Code Table Card */
+.qrCard {
+  background: #ffffff;
+  border-radius: 1.25rem;
+  padding: 2rem 1.75rem;
+  box-shadow: 0 12px 36px rgba(80, 28, 41, 0.08);
+  border: 1px solid rgba(80, 28, 41, 0.09);
   display: flex;
   flex-direction: column;
   align-items: center;
+  text-align: center;
   justify-content: center;
-  background: linear-gradient(120deg, #f5f5f5 0%, #eee9e4 100%);
-  font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
-  position: relative;
 }
 
-/* Decorative shapes */
-.c1, .c2, .c3, .c4, .c5 {
-  position: absolute;
-  border-radius: 50%;
-  opacity: 0.18;
-  filter: blur(8px);
-  z-index: 0;
+.qrBadge {
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  color: #652838;
+  background: rgba(101, 40, 56, 0.08);
+  padding: 0.3rem 0.8rem;
+  border-radius: 9999px;
+  margin-bottom: 1.25rem;
 }
-.c1 { width: 160px; height: 160px; top: 8%; left: 12%; background: #350511; }
-.c2 { width: 110px; height: 110px; top: 80%; left: 7%; background: #5c0a1f; }
-.c3 { width: 90px; height: 90px; top: 12%; right: 12%; background: #832940; }
-.c4 { width: 70px; height: 70px; bottom: 18%; right: 18%; background: #350511; }
-.c5 { width: 50px; height: 50px; bottom: 7%; left: 45%; background: #6a0720; }
 
-.header {
-  width: 100%;
-  max-width: 900px;
+.qrSvgWrapper {
+  padding: 1rem;
+  background: #ffffff;
+  border-radius: 1rem;
+  box-shadow: 0 8px 24px rgba(80, 28, 41, 0.12);
+  border: 1px solid #ebdada;
+  margin-bottom: 1.35rem;
   display: flex;
-  justify-content: flex-end;
   align-items: center;
-  padding: 2rem 2.5rem 1.2rem 2.5rem;
-  background: rgba(255,250,245,0.92);
-  border-radius: 1.25rem 1.25rem 0 0;
-  box-shadow: 0 8px 32px rgba(121, 85, 72, 0.10);
-  position: relative;
-  z-index: 1;
-  gap: 1rem;
+  justify-content: center;
 }
 
-.headerBtn {
-  padding: 0.6rem 1.5rem;
-  background: linear-gradient(90deg, #652838 0%, #501C29 100%);
-  color: #fff;
-  font-size: 1.05rem;
+.qrSvg {
+  display: block;
+}
+
+.qrTitle {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #350c18;
+  margin: 0 0 0.5rem;
+}
+
+.qrDesc {
+  font-size: 0.9rem;
+  color: #715b63;
+  line-height: 1.5;
+  margin: 0 0 1.25rem;
+  max-width: 320px;
+}
+
+.featureTags {
+  display: flex;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.featureTag {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.8rem;
   font-weight: 600;
-  border: none;
-  border-radius: 0.7rem;
-  box-shadow: 0 4px 16px rgba(121, 85, 72, 0.10);
-  cursor: pointer;
-  transition: background 0.2s, transform 0.2s;
-  letter-spacing: 0.5px;
-  margin-left: 0.5rem;
-}
-.headerBtn:hover {
-  background: linear-gradient(90deg, #501C29 0%, #652838 100%);
-  transform: translateY(-2px) scale(1.03);
+  color: #501C29;
+  background: #f7f0ee;
+  padding: 0.3rem 0.75rem;
+  border-radius: 9999px;
 }
 
-.mainCard {
+/* ---------------------------------------------------------
+   Workflow / 3-Step Section
+   --------------------------------------------------------- */
+.workflowSection {
+  margin: 3rem auto 5rem;
+  text-align: center;
+}
+
+.sectionHeading {
+  margin-bottom: 3rem;
+}
+
+.sectionSubtitle {
+  display: inline-block;
+  font-size: 0.85rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1.2px;
+  color: #652838;
+  margin-bottom: 0.5rem;
+}
+
+.sectionTitle {
+  font-size: 2.3rem;
+  font-weight: 800;
+  color: #350c18;
+  margin: 0;
+  letter-spacing: -0.6px;
+}
+
+.workflowGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.75rem;
+  text-align: left;
+}
+
+.stepCard {
+  background: #ffffff;
+  border-radius: 1.15rem;
+  padding: 2rem 1.65rem;
+  border: 1px solid rgba(80, 28, 41, 0.08);
+  box-shadow: 0 6px 20px rgba(80, 28, 41, 0.04);
   position: relative;
-  z-index: 1;
-  background: rgba(255,250,245,0.92);
-  padding: 2.5rem 2.5rem 2.5rem 2.5rem;
-  border-radius: 1.25rem;
-  box-shadow: 0 8px 32px rgba(121, 85, 72, 0.12);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.stepCard:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 28px rgba(80, 28, 41, 0.08);
+}
+
+.stepNumber {
+  position: absolute;
+  top: 1.25rem;
+  right: 1.5rem;
+  font-size: 1.8rem;
+  font-weight: 900;
+  color: rgba(80, 28, 41, 0.1);
+}
+
+.stepIcon {
+  width: 44px;
+  height: 44px;
+  border-radius: 10px;
+  background: rgba(80, 28, 41, 0.08);
+  color: #501C29;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.25rem;
+  margin-bottom: 1.25rem;
+}
+
+.stepTitle {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #350c18;
+  margin: 0 0 0.65rem;
+}
+
+.stepText {
+  font-size: 0.92rem;
+  line-height: 1.55;
+  color: #715b63;
+  margin: 0;
+}
+
+/* ---------------------------------------------------------
+   Bottom CTA Card
+   --------------------------------------------------------- */
+.bottomCtaSection {
+  margin: 2rem auto 3rem;
+}
+
+.bottomCtaCard {
+  background: linear-gradient(135deg, #441421 0%, #5c1f30 50%, #6e2a3c 100%);
+  border-radius: 1.5rem;
+  padding: 3.2rem 3rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2rem;
+  box-shadow: 0 16px 40px rgba(68, 20, 33, 0.28);
+  color: #ffffff;
+}
+
+.bottomCtaContent {
+  max-width: 600px;
+}
+
+.bottomCtaTitle {
+  font-size: 2.1rem;
+  font-weight: 800;
+  margin: 0 0 0.75rem;
+  letter-spacing: -0.5px;
+  line-height: 1.2;
+}
+
+.bottomCtaDesc {
+  font-size: 1.05rem;
+  color: rgba(255, 255, 255, 0.85);
+  margin: 0;
+  line-height: 1.5;
+}
+
+.bottomCtaBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.65rem;
+  background: #ffffff;
+  color: #501C29;
+  padding: 0.95rem 2rem;
+  border-radius: 9999px;
+  font-size: 1.05rem;
+  font-weight: 700;
+  text-decoration: none;
+  white-space: nowrap;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.15);
+  transition: all 0.25s ease;
+}
+
+.bottomCtaBtn:hover {
+  background: #fbf7f6;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.22);
+}
+
+/* ---------------------------------------------------------
+   Modern Footer
+   --------------------------------------------------------- */
+.footer {
+  border-top: 1px solid rgba(80, 28, 41, 0.08);
+  background: #f6f0ed;
   width: 100%;
-  max-width: 900px;
+  margin-top: auto;
+}
+
+.footerInner {
+  max-width: 1160px;
   margin: 0 auto;
   display: flex;
-  flex-direction: column;
   align-items: center;
-  gap: 2rem;
-  backdrop-filter: blur(2px);
-  border: 1px solid #d7ccc8;
-  margin-bottom: 2rem;
+  justify-content: space-between;
+  padding: 1.75rem 1.5rem;
+  gap: 1.5rem;
+  flex-wrap: wrap;
 }
 
-.title {
-  font-size: 2.5rem;
-  font-weight: 800;
-  color: #652838;
-  text-align: center;
-  margin-bottom: 0.7rem;
-  letter-spacing: 1px;
-}
-
-.subtitle {
-  font-size: 1.2rem;
-  color: #652838;
-  text-align: center;
-  margin-bottom: 1.5rem;
-  font-weight: 500;
-}
-
-.qrSection {
+.footerBrand {
   display: flex;
-  flex-direction: column;
   align-items: center;
-  gap: 1.2rem;
+  gap: 0.6rem;
 }
-.qrImage {
-  width: 140px;
-  height: 140px;
-  background: #f5f5f5;
-  border-radius: 1rem;
+
+.footerIcon {
+  width: 28px;
+  height: 28px;
+  border-radius: 7px;
+  background: #501C29;
+  color: #ffffff;
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 2px 8px rgba(121, 85, 72, 0.10);
+  font-size: 0.85rem;
 }
-.qrLabel {
-  color: #652838;
-  font-size: 1.1rem;
+
+.footerBrandText {
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: #501C29;
+}
+
+.footerCopyright {
+  margin: 0;
+  font-size: 0.88rem;
+  color: #7b666e;
+}
+
+.footerLinks {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+}
+
+.footerLink {
+  color: #501C29;
+  font-size: 0.92rem;
   font-weight: 600;
-  margin-top: 0.5rem;
+  text-decoration: none;
+  transition: color 0.2s ease;
 }
 
-.menuPreview {
-  margin-top: 1.5rem;
-  background: #fff8f3;
-  border-radius: 0.7rem;
-  padding: 1.2rem 2rem;
-  box-shadow: 0 2px 8px rgba(121, 85, 72, 0.04);
-  border: 1px solid #d7ccc8;
-  min-width: 220px;
-  min-height: 80px;
+.footerLink:hover {
   color: #652838;
-  font-size: 1.1rem;
-  text-align: center;
+  text-decoration: underline;
 }
-.menuPreview strong {
-  font-weight: 700;
-  color: #7C4855;
-}
-@media (max-width: 700px) {
-  .mainCard, .header {
-    padding: 1rem 0.5rem;
-    max-width: 98vw;
-    border-radius: 0.8rem;
+
+/* ---------------------------------------------------------
+   Responsive Breakpoints
+   --------------------------------------------------------- */
+@media (max-width: 900px) {
+  .heroTitle {
+    font-size: 2.6rem;
   }
-  .title {
-    font-size: 1.3rem;
+
+  .showcaseGrid {
+    grid-template-columns: 1fr;
   }
-  .subtitle {
-    font-size: 1rem;
+
+  .workflowGrid {
+    grid-template-columns: 1fr;
   }
-  .qrImage {
-    width: 90px;
-    height: 90px;
+
+  .bottomCtaCard {
+    flex-direction: column;
+    text-align: center;
+    padding: 2.5rem 1.75rem;
   }
-  .menuPreview {
-    padding: 0.7rem 0.7rem;
-    font-size: 0.98rem;
+
+  .bottomCtaContent {
+    max-width: 100%;
   }
 }
 
-@media (max-width: 480px) {
-    .body {
-    justify-content: flex-start;
-    padding-top: 0;
+@media (max-width: 600px) {
+  .heroTitle {
+    font-size: 2.1rem;
   }
-  .navbar {
-    width: 100vw;
-    max-width: 100vw;
-    padding: 0.7rem 0.3rem 0.7rem 0.3rem;
-    font-size: 0.95rem;
-    gap: 0.5rem;
-    border-radius: 0 0 0.7rem 0.7rem;
-    margin-right: 0;
-    padding-left: 20px;
+
+  .heroSubtitle {
+    font-size: 1.05rem;
   }
-  .navLogo {
-    font-size: 1.1rem;
-    gap: 0.3rem;
+
+  .primaryCta {
+    width: 100%;
+    justify-content: center;
   }
-  .logoIcon {
-    font-size: 1.3rem;
-  }
-  .logoText {
-    font-size: 1rem;
-  }
-  .navLink {
-    padding: 0.4rem 0.7rem;
-    font-size: 0.92rem;
-    border-radius: 0.5rem;
+
+  .footerInner {
+    flex-direction: column;
+    text-align: center;
+    gap: 1rem;
   }
 }
-  

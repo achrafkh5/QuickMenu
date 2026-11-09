@@ -1,10 +1,10 @@
 import styles from "./main.module.css";
-import { useEffect,useState } from "react";
+import { useEffect, useState } from "react";
 import { FaTrash } from "react-icons/fa";
 
-function Cat({cats, isSelected, onClick, onDeleteCat, reload, isOperating }){
+function Cat({ cats, isSelected, onClick, onDeleteCat, reload, isOperating }) {
     const [showDelete, setShowDelete] = useState(false);
-    const [dish,setDish] = useState([]);
+    const [dish, setDish] = useState([]);
     const [isMobile, setIsMobile] = useState(false);
     
     useEffect(() => {
@@ -18,14 +18,14 @@ function Cat({cats, isSelected, onClick, onDeleteCat, reload, isOperating }){
         return () => window.removeEventListener('resize', checkMobile);
     }, []);
     
-    useEffect(()=>{
-        const fetchDish = async() => {
+    useEffect(() => {
+        const fetchDish = async () => {
             if (!cats?._id) {
                 setDish([]);
                 return;
             }
             
-            try{
+            try {
                 const res = await fetch(`/api/dishes?id=${cats._id}`, {
                     method: "GET",
                     credentials: "include",
@@ -48,49 +48,54 @@ function Cat({cats, isSelected, onClick, onDeleteCat, reload, isOperating }){
             }
         };
         fetchDish();
-    },[cats,reload])
+    }, [cats, reload]);
     
-    return(
+    return (
         <div 
-            className={styles.radio} 
+            className={`${styles.catItem} ${isSelected ? styles.catItemSelected : ''}`}
             onClick={isOperating ? undefined : onClick} 
             onMouseEnter={() => !isOperating && setShowDelete(true)} 
             onMouseLeave={() => setShowDelete(false)} 
             style={isOperating ? { opacity: 0.6, cursor: 'not-allowed' } : { cursor: 'pointer' }}
         >
-            <div className={styles.ster}>
-                <div className={styles["ster-left"]}>
-                    {cats?.avatar?.url && (
-                        // eslint-disable-next-line @next/next/no-img-element
-                        <img 
-                            src={cats.avatar.url} 
-                            alt={cats.name || 'Category'} 
-                            width={50} 
-                            height={50} 
-                            style={{ borderRadius: '8px', objectFit: 'cover' }}
-                        />
-                    )}
-                    <p>{cats.name}</p>
-                </div>
-                <div className={styles["ster-right"]}>
-                    <p>({Array.isArray(dish) ? dish.length : 0})</p>
-                    {(showDelete || isMobile) && !isOperating && (
-                        <FaTrash 
-                            className="trash-icon" 
-                            style={{
-                                marginLeft: "10px",
-                                color: "white",
-                                cursor: "pointer"
-                            }} 
-                            onClick={e => { 
-                                e.stopPropagation(); 
-                                onDeleteCat(); 
-                            }} 
-                        />
-                    )}
-                </div>
+            <div className={styles.catItemLeft}>
+                {cats?.avatar?.url ? (
+                    // eslint-disable-next-line @next/next/no-img-element
+                    <img 
+                        src={cats.avatar.url} 
+                        alt={cats.name || 'Category'} 
+                        width={38} 
+                        height={38} 
+                        className={styles.catItemImg}
+                    />
+                ) : (
+                    <div className={styles.catItemPlaceholder}>
+                        <i className="fas fa-utensils"></i>
+                    </div>
+                )}
+                <span className={styles.catItemName}>{cats.name}</span>
+            </div>
+            <div className={styles.catItemRight}>
+                <span className={styles.catItemBadge}>
+                    {Array.isArray(dish) ? dish.length : 0}
+                </span>
+                {(showDelete || isMobile) && !isOperating && (
+                    <button
+                        type="button"
+                        className={styles.catDeleteBtn}
+                        onClick={e => { 
+                            e.stopPropagation(); 
+                            onDeleteCat(); 
+                        }}
+                        aria-label="Delete category"
+                        title="Delete category"
+                    >
+                        <FaTrash className={styles.trashIcon} />
+                    </button>
+                )}
             </div>
         </div>
-    )
+    );
 }
+
 export default Cat;

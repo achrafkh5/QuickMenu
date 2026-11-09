@@ -1,33 +1,47 @@
 "use client";
 
-import { useState,useEffect } from "react";
 import styles from "./code.module.css";
 import Section from "./section";
-import Image from "next/image";
-function Menu({cats,dishes}) {
-    const [dish,setDish]=useState(dishes||[]);
-    useEffect(() => {
-    if (cats?._id && dishes) {
-      setDish(dishes.filter(d => String(d.categoryId) === String(cats._id)));
+
+function Menu({ cats, dishes, id }) {
+    const categoryDishes = Array.isArray(dishes) ? dishes : [];
+
+    if (categoryDishes.length === 0) {
+        return null;
     }
-  }, [cats, dishes]);
-    return(
-        <div className={styles.menu_column}>
-            <div className={styles["cat-header"]}>
-                <img src={cats.avatar.url} alt={cats.name} />
-                <h5>{cats.name}</h5>
+
+    return (
+        <section id={id} className={styles.categorySection}>
+            <div className={styles.categoryHeader}>
+                <div className={styles.categoryHeaderLeft}>
+                    {cats?.avatar?.url ? (
+                        // eslint-disable-next-line @next/next/no-img-element
+                        <img 
+                            src={cats.avatar.url} 
+                            alt={cats.name || 'Category'} 
+                            className={styles.categoryHeaderImg}
+                        />
+                    ) : (
+                        <div className={styles.categoryPlaceholder}>
+                            <i className="fas fa-utensils"></i>
+                        </div>
+                    )}
+                    <div className={styles.categoryHeaderDetails}>
+                        <h3 className={styles.categoryTitle}>{cats?.name}</h3>
+                        <span className={styles.categoryCount}>
+                            {categoryDishes.length} {categoryDishes.length === 1 ? 'item' : 'items'}
+                        </span>
+                    </div>
+                </div>
             </div>
-            <div className={styles.dish}>
-                {dish?.length>0?(
-                    <div className={styles.dish_section}>
-                        {dish.map(dish=>(
-                            <Section key={dish._id} dish={dish} />
-                        ))}
-                    </div>)
-                    :
-                (<p>no dishes found</p>)}
+
+            <div className={styles.dishesGrid}>
+                {categoryDishes.map((dish) => (
+                    <Section key={dish._id} dish={dish} />
+                ))}
             </div>
-        </div>
-    )
+        </section>
+    );
 }
+
 export default Menu;
